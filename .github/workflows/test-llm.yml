@@ -1,0 +1,25 @@
+name: test-llm
+on: workflow_dispatch
+permissions:
+  contents: read
+  models: read
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'EOF'
+          import os, json, urllib.request
+          for model in ['openai/gpt-4o-mini', 'openai/gpt-4.1-mini']:
+              for rf in [True, False]:
+                  body = {'model': model, 'messages': [{'role': 'user', 'content': 'Return JSON {"a": 1}'}], 'max_tokens': 50}
+                  if rf: body['response_format'] = {'type': 'json_object'}
+                  req = urllib.request.Request('https://models.github.ai/inference/chat/completions', data=json.dumps(body).encode(), headers={'Authorization': 'Bearer ' + os.environ['GITHUB_TOKEN'], 'Content-Type': 'application/json', 'Accept': 'application/json'})
+                  try:
+                      r = urllib.request.urlopen(req, timeout=60)
+                      print(model, rf, r.status, r.headers.get('content-type'), r.read()[:400])
+                  except Exception as e:
+                      print(model, rf, 'ERR', e, getattr(e, 'read', lambda: b'')()[:400])
+          EOF
