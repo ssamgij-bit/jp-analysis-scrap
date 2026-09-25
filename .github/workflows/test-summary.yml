@@ -1,0 +1,32 @@
+name: test-summary
+on: workflow_dispatch
+permissions:
+  contents: read
+  models: read
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python - <<'EOF'
+          from bot import build_message
+          from common import note_detail, tg_send, find_tickers
+          d = note_detail('n3193181437ed')
+          src = {'name': 'きぃちゃん', 'platform': 'note', 'mode': 'jpstock', 'lang': 'ja'}
+          title = 'WOLVES HAND（194A）初配26円の20日後、会社を作ったファンドが株のほぼ全部を売りに出した'
+          it = {'title': title, 'text': d['body'], 'link': 'https://note.com/kii_chan04/n/n3193181437ed', 'time': None, 'price': 0}
+          st = {}
+          msg = build_message(src, it, find_tickers(title + d['body'], title=title), st)
+          print(msg)
+          print(st)
+          tg_send('🧪 [요약 형식 테스트]\n' + msg)
+          EOF
