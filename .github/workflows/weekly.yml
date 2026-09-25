@@ -1,0 +1,35 @@
+name: weekly-sources
+on:
+  schedule:
+    - cron: "0 22 * * 6"    # 매주 일요일 07:00 KST
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: jpscrap
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: stock codes (if missing)
+        run: test -f codes.json || python codes.py
+      - run: python maintain.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      - name: save sources
+        run: |
+          git config user.name "jpscrap-bot"
+          git config user.email "actions@github.com"
+          git add sources.yaml rejected.yaml codes.json 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "weekly source update" -q
+          git pull --rebase -q || true
+          git push -q || true
