@@ -1,5 +1,5 @@
 """글 전체 요약·결론 생성.
-1순위: GitHub Models(무료, Actions의 GITHUB_TOKEN 사용, 키·비용 없음)
+1순위: Google Gemini 무료 API(GitHub Secret GEMINI_API_KEY, 비용 없음)
 2순위(한도 초과·오류 시): 규칙 기반 추출 요약(핵심 문장 + 결론부) → 무료 번역"""
 import json
 import os
@@ -7,10 +7,10 @@ import re
 
 from common import S, translate, fin_score, find_tickers
 
-ENDPOINT = "https://models.github.ai/inference/chat/completions"
-MODEL = os.environ.get("SUMMARY_MODEL", "openai/gpt-4o-mini")
-MAX_INPUT_CHARS = 6000  # 무료 한도(요청당 입력 8,000토큰) 안쪽
-DAILY_LIMIT = 140       # 무료 한도(하루 150회) 안쪽
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+MODELS = [m for m in os.environ.get("SUMMARY_MODEL", "gemini-flash-latest,gemini-2.5-flash,gemini-flash-lite-latest").split(",") if m]
+MAX_INPUT_CHARS = 12000
+DAILY_LIMIT = 900       # Gemini 무료 한도(하루 1,000~1,500회) 안쪽
 
 PROMPT = """너는 한국 자산운용사 애널리스트를 돕는 리서치 보조다. 아래 일본 주식 분석글을 읽고 한국어로 정리해라.
 규칙:
@@ -22,36 +22,34 @@ JSON으로만 답해라: {"title_ko": "...", "summary": ["...", "...", "..."], "
 
 
 def _llm(title, text):
-    token = os.environ.get("GITHUB_TOKEN")
-    if not token:
+    """Google Gemini 무료 API(키: GitHub Secret GEMINI_API_KEY). 키가 없거나 실패하면 None"""
+    key = os.environ.get("GEMINI_API_KEY")
+    if not key:
         return None
     body = {
-        "model": MODEL,
-        "messages": [
-            {"role": "system", "content": PROMPT},
-            {"role": "user", "content": f"제목: {title}\n\n본문:\n{text[:MAX_INPUT_CHARS]}"},
-        ],
-        "temperature": 0.2,
-        "max_tokens": 700,
-        "response_format": {"type": "json_object"},
+        "contents": [{"role": "user", "parts": [{"text": PROMPT + "\n\n제목: " + title + "\n\n본문:\n" + text[:MAX_INPUT_CHARS]}]}],
+        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 1024, "responseMimeType": "application/json"},
     }
-    try:
-        r = S.post(ENDPOINT, json=body, timeout=60,
-                   headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
-        if r.status_code != 200:
-            print("llm error", r.status_code, r.text[:200])
-            return None
-        c = r.json()["choices"][0]["message"]["content"]
-        fence = chr(96) * 3  # 코드블록 표시 제거
-        d = json.loads(re.sub("^" + fence + "(?:json)?|" + fence + "$", "", c.strip()))
-        if not d.get("summary"):
-            return None
-        d["summary"] = [s.strip() for s in d["summary"] if s and s.strip()][:3]
-        d["via"] = "llm"
-        return d
-    except Exception as e:
-        print("llm exception", e)
-        return None
+    for model in MODELS:
+        try:
+            r = S.post(GEMINI_URL.format(model=model.strip()), params={"key": key}, json=body, timeout=60)
+            if r.status_code != 200:
+                print("llm error", model, r.status_code, r.text[:200])
+                continue
+            parts = r.json()["candidates"][0]["content"]["parts"]
+            c = "".join(p.get("text", "") for p in parts).strip()
+            fence = chr(96) * 3  # 코드블록 표시 제거
+            c = re.sub("^" + fence + "(?:json)?|" + fence + "$", "", c).strip()
+            m = re.search(r"\{.*\}", c, re.S)
+            d = json.loads(m.group(0) if m else c)
+            if not d.get("summary"):
+                continue
+            d["summary"] = [str(x).strip() for x in d["summary"] if x and str(x).strip()][:3]
+            d["via"] = "llm:" + model
+            return d
+        except Exception as e:
+            print("llm exception", model, e)
+    return None
 
 
 # ---------------- 규칙 기반(대체) ----------------
@@ -62,7 +60,8 @@ _JUDGE = re.compile(r"(と考え|と判断|買い|売り|保有|注目|割安|�
 def _sentences(text):
     t = re.sub(r"[ \t]+", " ", text or "")
     parts = re.split(r"(?<=[。．！？!?])\s*|\n+|(?<=[.])\s+(?=[A-Z])", t)
-    return [p.strip() for p in parts if 15 <= len(p.strip()) <= 220]
+    junk = re.compile(r"https?://|www\.|リンク|링크|^\s*[QA]\d+\s*[:：]|フォロー|スキ|메일|Subscribe", re.I)
+    return [p.strip() for p in parts if 15 <= len(p.strip()) <= 220 and not junk.search(p)]
 
 
 def _extractive(title, text):
@@ -107,7 +106,7 @@ def summarize(title, text, lang, state):
     d = datetime.now(timezone(timedelta(hours=9))).date().isoformat()
     used = today.get(d, 0)
     res = None
-    if used < DAILY_LIMIT and len(text or "") >= 300:
+    if used < DAILY_LIMIT and len(text or "") >= 300 and os.environ.get("GEMINI_API_KEY"):
         res = _llm(title, text)
         today.clear()
         today[d] = used + 1
