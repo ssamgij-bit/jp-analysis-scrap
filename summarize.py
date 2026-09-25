@@ -4,11 +4,12 @@
 import json
 import os
 import re
+import time
 
 from common import S, translate, fin_score, find_tickers
 
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-MODELS = [m for m in os.environ.get("SUMMARY_MODEL", "gemini-flash-latest,gemini-2.5-flash,gemini-flash-lite-latest").split(",") if m]
+MODELS = [m for m in os.environ.get("SUMMARY_MODEL", "gemini-flash-latest,gemini-flash-lite-latest").split(",") if m]
 MAX_INPUT_CHARS = 12000
 DAILY_LIMIT = 900       # Gemini 무료 한도(하루 1,000~1,500회) 안쪽
 
@@ -18,7 +19,15 @@ PROMPT = """너는 한국 자산운용사 애널리스트를 돕는 리서치 �
 - summary: 글 전체의 핵심 논지를 3개 항목으로. 각 항목 한 문장, 60자 이내. 실적 수치·밸류에이션·사업 구조·리스크 중 글이 강조한 것 위주.
 - conclusion: 글쓴이의 최종 판단(매수/보유/관망/매도 의견, 목표·적정 가치, 주목 포인트, 핵심 리스크)을 한두 문장으로. 글에 명확한 결론이 없으면 "명시적 결론 없음"이라고 쓰고 글이 향하는 방향만 짧게.
 - title_ko: 원제목의 자연스러운 한국어 번역.
+- 모든 값은 반드시 한국어로 쓴다(일본어·영어 문장 금지, 고유명사는 한국어 표기 후 필요하면 괄호로 원문).
 JSON으로만 답해라: {"title_ko": "...", "summary": ["...", "...", "..."], "conclusion": "..."}"""
+KANA = re.compile("[" + chr(0x3040) + "-" + chr(0x30FF) + "]")
+
+
+def _ko(x):
+    """모델이 일본어로 답한 경우 무료 번역으로 보정"""
+    x = str(x).strip()
+    return (translate(x) or x) if len(KANA.findall(x)) >= 3 else x
 
 
 def _llm(title, text):
@@ -33,6 +42,9 @@ def _llm(title, text):
     for model in MODELS:
         try:
             r = S.post(GEMINI_URL.format(model=model.strip()), params={"key": key}, json=body, timeout=60)
+            if r.status_code in (429, 503):  # 일시 과부하 → 한 번 더
+                time.sleep(8)
+                r = S.post(GEMINI_URL.format(model=model.strip()), params={"key": key}, json=body, timeout=60)
             if r.status_code != 200:
                 print("llm error", model, r.status_code, r.text[:200])
                 continue
@@ -44,7 +56,9 @@ def _llm(title, text):
             d = json.loads(m.group(0) if m else c)
             if not d.get("summary"):
                 continue
-            d["summary"] = [str(x).strip() for x in d["summary"] if x and str(x).strip()][:3]
+            d["summary"] = [_ko(x) for x in d["summary"] if x and str(x).strip()][:3]
+            d["conclusion"] = _ko(d.get("conclusion", ""))
+            d["title_ko"] = _ko(d.get("title_ko", "")) or title
             d["via"] = "llm:" + model
             return d
         except Exception as e:
