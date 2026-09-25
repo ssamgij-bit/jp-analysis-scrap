@@ -7,6 +7,7 @@ import unicodedata
 from datetime import datetime, timezone, timedelta
 
 from note_quality import ai_written
+from summarize import summarize
 from common import (load_yaml, load_json, save_json, fetch_feed, entry_time, entry_text, substack_locked,
                     note_key, note_detail, fetch_tg_channel, find_tickers, ticker_label, fin_score, has_japan,
                     banned, detect_lang, translate, lead_sentences, tg_send, esc, KST)
@@ -116,15 +117,11 @@ def ko_name(code):
     return val
 
 
-def build_message(src, it, tick):
+def build_message(src, it, tick, state):
     lang = src.get("lang") or detect_lang(it["title"] + it["text"][:300])
     title = it["title"] or "(제목 없음)"
-    summary_src = lead_sentences(it["text"], 260)
-    if lang != "ko":
-        t_title = translate(title) or title
-        t_sum = translate(summary_src) if summary_src else ""
-    else:
-        t_title, t_sum = title, summary_src
+    sm = summarize(title, it["text"], lang, state)
+    t_title = sm.get("title_ko") or title
     lines = [f"{FLAG.get(lang, '🌐')} <b>{esc(t_title)}</b>"]
     if lang != "ko" and t_title != title:
         lines.append(f"<i>{esc(title)}</i>")
@@ -139,9 +136,14 @@ def build_message(src, it, tick):
         tags.append("🔎발굴")
     if tags:
         lines.append(" · ".join(tags))
-    if t_sum:
+    if sm.get("summary"):
         lines.append("")
-        lines.append(esc(t_sum[:350]))
+        head = "📌 요약" + (" (유료 글, 공개 부분 기준)" if it.get("price") or it.get("locked") else "")
+        lines.append(f"<b>{head}</b>")
+        lines += [f"• {esc(s)}" for s in sm["summary"]]
+    if sm.get("conclusion"):
+        lines.append("")
+        lines.append(f"🎯 <b>결론</b> {esc(sm['conclusion'])}")
     when = it["time"].astimezone(KST).strftime("%m-%d %H:%M") if it.get("time") else ""
     who = src["name"]
     if src.get("mode") == "discover" and it.get("author"):
@@ -206,7 +208,7 @@ def main():
             ok, tick = judge(src, it)
             if not ok:
                 continue
-            msg = build_message(src, it, tick)
+            msg = build_message(src, it, tick, state)
             if tg_send(msg):
                 posted += 1
                 daily[today_kst] = daily.get(today_kst, 0) + 1
