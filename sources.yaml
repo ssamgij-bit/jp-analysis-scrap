@@ -1,0 +1,130 @@
+# 일본 주식 분석글 소스 목록
+# status: active(수집) / dormant(60일 이상 새 글 없음, 매주 재확인) / blocked(수집·자동편입 제외)
+# mode: all(일본 개별주 전문, 종목·재무 신호 있으면 게시) / jpstock(혼합, 일본 종목 신호 있는 글만) / discover(note 해시태그, 엄격 기준)
+# 소스를 직접 추가하려면 아래 형식으로 한 블록 추가 (주간 작업이 활동 여부를 자동 점검)
+sources:
+- {id: altaycap, platform: substack, url: 'https://altaycap.substack.com/feed', status: blocked}
+- {id: japaninvesting, platform: substack, url: 'https://japaninvesting.substack.com/feed', status: blocked}
+- {id: tokyodeepvalue, platform: substack, url: 'https://tokyodeepvalue.substack.com/feed', status: blocked}
+- {id: japaninterface, platform: substack, url: 'https://japaninterface.substack.com/feed', status: blocked}
+- {id: jparcvue, platform: substack, url: 'https://jparcvue.substack.com/feed', status: blocked}
+- {id: japaneseipo, platform: substack, url: 'https://japaneseipo.substack.com/feed', status: blocked}
+- {id: kabujapan, platform: substack, url: 'https://kabujapan.substack.com/feed', status: blocked}
+- {id: undervaluedjapan, platform: substack, url: 'https://undervaluedjapan.substack.com/feed', status: blocked}
+- {id: japanstocksdecoded, platform: substack, url: 'https://japanstocksdecoded.substack.com/feed', status: blocked}
+- {id: konichivalue, platform: substack, url: 'https://www.konichivalue.com/feed', status: blocked}
+- {id: asiancenturystocks, platform: substack, url: 'https://www.asiancenturystocks.com/feed', status: blocked}
+- {id: madeinjapan, platform: substack, url: 'https://madeinjapan.substack.com/feed', status: blocked}
+- {id: japanoptimist, platform: substack, url: 'https://japanoptimist.substack.com/feed', status: blocked}
+- {id: continuouscompounding, platform: substack, url: 'https://continuouscompounding.substack.com/feed', status: blocked}
+- {id: emergingmarketskeptic, platform: substack, url: 'https://emergingmarketskeptic.substack.com/feed', status: blocked}
+- {id: aaronmiyazaki, platform: substack, url: 'https://aaronmiyazaki.substack.com/feed', status: blocked}
+- {id: japanbusinesssecrets, platform: substack, url: 'https://japanbusinesssecrets.substack.com/feed', status: blocked}
+- {id: triplesinvesting, platform: substack, url: 'https://triplesinvesting.substack.com/feed', status: blocked}
+- {id: rockandturner, platform: substack, url: 'https://rockandturner.substack.com/feed', status: blocked}
+- {id: emergingvalue, platform: substack, url: 'https://emergingvalue.substack.com/feed', status: blocked}
+- {id: douglasresearch, platform: substack, url: 'https://douglasresearch.substack.com/feed', status: blocked}
+- {id: jpequityintel, platform: substack, url: 'https://jpequityintel.substack.com/feed', status: blocked}
+- {id: japansmallcapradar, platform: substack, url: 'https://japansmallcapradar.substack.com/feed', status: blocked}
+- {id: japaninvestor, platform: substack, url: 'https://japaninvestor.substack.com/feed', status: blocked}
+- {id: japanstockedge, platform: substack, url: 'https://japanstockedge.substack.com/feed', status: blocked}
+- {id: netnethunterjapan, platform: substack, url: 'https://netnethunterjapan.substack.com/feed', status: blocked}
+- {id: japansmallcaps, platform: substack, url: 'https://japansmallcaps.substack.com/feed', status: blocked}
+- {id: kokitokyovalue, platform: substack, url: 'https://kokitokyovalue.substack.com/feed', status: blocked}
+- {id: eastasiastocks, platform: substack, url: 'https://eastasiastocks.substack.com/feed', status: blocked}
+- {id: dungeoninvesting, platform: substack, url: 'https://dungeoninvesting.substack.com/feed', status: blocked}
+- {id: k7713, platform: substack, url: 'https://k7713.substack.com/feed', status: blocked}
+- {id: torghattencapital, platform: substack, url: 'https://torghattencapital.substack.com/feed', status: blocked}
+- {id: asianmarketsense, platform: substack, url: 'https://asianmarketsense.substack.com/feed', status: blocked}
+- {id: miyabijapansecuritiesnews, platform: substack, url: 'https://miyabijapansecuritiesnews.substack.com/feed', status: blocked}
+- {id: japanmarketwrap, platform: substack, url: 'https://japanmarketwrap.substack.com/feed', status: blocked}
+- {id: takujiokubo, platform: substack, url: 'https://takujiokubo.substack.com/feed', status: blocked}
+- {id: observingjapan, platform: substack, url: 'https://observingjapan.substack.com/feed', status: blocked}
+- {id: richardkatz, platform: substack, url: 'https://richardkatz.substack.com/feed', status: blocked}
+- id: kamomenotoushi
+  name: 大河の一滴
+  type: rss
+  platform: hatena
+  url: https://kamomenotoushi.hatenablog.com/feed
+  lang: ja
+  mode: all
+  status: active
+  exclude_title: [おしながき]
+- {id: minipochi, platform: hatena, url: 'https://minipochi.hateblo.jp/feed', status: blocked}
+- {id: wariyasukabuhakkutsu, platform: hatena, url: 'https://wariyasukabuhakkutsu.hatenablog.com/feed', status: blocked}
+- {id: note-kii_chan04, name: きぃちゃん, type: rss, platform: note, url: 'https://note.com/kii_chan04/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-isi555, name: しんご｜日本高配当株マニア, type: rss, platform: note, url: 'https://note.com/isi555/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-yoshida_dino, platform: note, url: 'https://note.com/yoshida_dino/rss', status: blocked}
+- {id: note-heiseinotanukiti, platform: note, url: 'https://note.com/heiseinotanukiti/rss', status: blocked}
+- {id: note-white_cpa260605, name: ハク｜公認会計士・中小企業診断士, type: rss, platform: note, url: 'https://note.com/white_cpa260605/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-deft_knot1002, platform: note, url: 'https://note.com/deft_knot1002/rss', status: blocked}
+- {id: note-kabutabi2000, platform: note, url: 'https://note.com/kabutabi2000/rss', status: blocked}
+- {id: note-gamepopopo, name: 【日本株投資家】LeoRの株トレ, type: rss, platform: note, url: 'https://note.com/gamepopopo/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-kou_koto, platform: note, url: 'https://note.com/kou_koto/rss', status: blocked}
+- {id: note-light_daphne199, platform: note, url: 'https://note.com/light_daphne199/rss', status: blocked}
+- {id: note-umaki11, platform: note, url: 'https://note.com/umaki11/rss', status: blocked}
+- {id: note-mintou, platform: note, url: 'https://note.com/mintou/rss', status: blocked}
+- {id: note-apt_hebe8902, name: シュウ, type: rss, platform: note, url: 'https://note.com/apt_hebe8902/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-makomen_life, platform: note, url: 'https://note.com/makomen_life/rss', status: blocked}
+- {id: note-kabu_tsuchihyo, platform: note, url: 'https://note.com/kabu_tsuchihyo/rss', status: blocked}
+- {id: note-crisp_pony6313, platform: note, url: 'https://note.com/crisp_pony6313/rss', status: blocked}
+- {id: note-yurukabuchan, platform: note, url: 'https://note.com/yurukabuchan/rss', status: blocked}
+- {id: note-81street, platform: note, url: 'https://note.com/81street/rss', status: blocked}
+- {id: note-greaterbenefic, platform: note, url: 'https://note.com/greaterbenefic/rss', status: blocked}
+- {id: note-disclosure_cats, platform: note, url: 'https://note.com/disclosure_cats/rss', status: blocked}
+- {id: note-chukei_hack, platform: note, url: 'https://note.com/chukei_hack/rss', status: blocked}
+- {id: note-noteworkr, platform: note, url: 'https://note.com/noteworkr/rss', status: blocked}
+- {id: note-lush_badger1139, name: かみちぃ, type: rss, platform: note, url: 'https://note.com/lush_badger1139/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-kokonoe_cluture, name: ココノエ｜日本株を数字で読む, type: rss, platform: note, url: 'https://note.com/kokonoe_cluture/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-tsubo_com_, platform: note, url: 'https://note.com/tsubo_com_/rss', status: blocked}
+- {id: note-xyl1sh, name: ゆう@XYL1SH, type: rss, platform: note, url: 'https://note.com/xyl1sh/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-uninote8320, platform: note, url: 'https://note.com/uninote8320/rss', status: blocked}
+- {id: note-kingkong_z, platform: note, url: 'https://note.com/kingkong_z/rss', status: blocked}
+- {id: note-dk_tkr, platform: note, url: 'https://note.com/dk_tkr/rss', status: blocked}
+- {id: note-akagane1, name: あかがねとバナ吉/投資をわかりやすく, type: rss, platform: note, url: 'https://note.com/akagane1/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-yamashantoushi, platform: note, url: 'https://note.com/yamashantoushi/rss', status: blocked}
+- {id: note-right_wolf1654, platform: note, url: 'https://note.com/right_wolf1654/rss', status: blocked}
+- {id: note-ruu_bee367, name: RUU/投資歴15年高配当株大好き, type: rss, platform: note, url: 'https://note.com/ruu_bee367/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-taisuke_invest, platform: note, url: 'https://note.com/taisuke_invest/rss', status: blocked}
+- {id: note-yomu_kessan, name: 決算から読む日本株, type: rss, platform: note, url: 'https://note.com/yomu_kessan/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-xmgnzg, platform: note, url: 'https://note.com/xmgnzg/rss', status: blocked}
+- {id: note-alive_cougar5727, platform: note, url: 'https://note.com/alive_cougar5727/rss', status: blocked}
+- {id: note-light_briony7125, platform: note, url: 'https://note.com/light_briony7125/rss', status: blocked}
+- {id: note-ippan_invest, name: 一般人投資家のいっぱん, type: rss, platform: note, url: 'https://note.com/ippan_invest/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-buffekk, platform: note, url: 'https://note.com/buffekk/rss', status: blocked}
+- {id: note-mog_lab, platform: note, url: 'https://note.com/mog_lab/rss', status: blocked}
+- {id: note-toushi_kaizoudo, platform: note, url: 'https://note.com/toushi_kaizoudo/rss', status: blocked}
+- {id: note-jolly_holly8541, platform: note, url: 'https://note.com/jolly_holly8541/rss', status: blocked}
+- {id: note-kabu_times, platform: note, url: 'https://note.com/kabu_times/rss', status: blocked}
+- {id: note-yakupiyo, name: やくぴよl在宅薬剤師✖️AI✖️子育て, type: rss, platform: note, url: 'https://note.com/yakupiyo/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-suu2, platform: note, url: 'https://note.com/suu2/rss', status: blocked}
+- {id: note-mahjong_lab, platform: note, url: 'https://note.com/mahjong_lab/rss', status: blocked}
+- {id: note-seed_vet, platform: note, url: 'https://note.com/seed_vet/rss', status: blocked}
+- {id: note-noted_rhino277, name: 2035グロース研究室｜日本株分析, type: rss, platform: note, url: 'https://note.com/noted_rhino277/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-tatsuya_sabato, platform: note, url: 'https://note.com/tatsuya_sabato/rss', status: blocked}
+- {id: note-tag-企業分析, name: 'note #企業分析', type: rss, platform: note_tag, url: 'https://note.com/hashtag/%E4%BC%81%E6%A5%AD%E5%88%86%E6%9E%90/rss', lang: ja, mode: discover, status: active}
+- {id: note-tag-銘柄分析, name: 'note #銘柄分析', type: rss, platform: note_tag, url: 'https://note.com/hashtag/%E9%8A%98%E6%9F%84%E5%88%86%E6%9E%90/rss', lang: ja, mode: discover, status: active}
+- {id: note-tag-決算分析, name: 'note #決算分析', type: rss, platform: note_tag, url: 'https://note.com/hashtag/%E6%B1%BA%E7%AE%97%E5%88%86%E6%9E%90/rss', lang: ja, mode: discover, status: active}
+- {id: naver-neighbor_biz, name: 이웃나라 기업사전, type: rss, platform: naver, url: 'https://rss.blog.naver.com/neighbor_biz.xml', lang: ko, mode: all, status: active}
+- {id: tg-aetherjapanresearch, platform: telegram, url: 'https://t.me/s/aetherjapanresearch', status: blocked}
+- {id: numbersnotnarrative-substack-com, platform: substack, url: 'https://numbersnotnarrative.substack.com/feed', status: blocked}
+- {id: mkenzow-substack-com, platform: substack, url: 'https://mkenzow.substack.com/feed', status: blocked}
+- {id: note-ohashi_investor, name: オオハシ@億り人FIRE🔥フォロバ100%, type: rss, platform: note, url: 'https://note.com/ohashi_investor/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-light_tulip2744, name: ベイファン＠個別株分析, type: rss, platform: note, url: 'https://note.com/light_tulip2744/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-huge_quokka6653, name: RYO＠AFP・FP2級・外務員1種, type: rss, platform: note, url: 'https://note.com/huge_quokka6653/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-ichiha_money, name: いちは｜高配当株で月5万を目指す投資メモ, type: rss, platform: note, url: 'https://note.com/ichiha_money/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-super_zebra938, name: ロン・ちび助, type: rss, platform: note, url: 'https://note.com/super_zebra938/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-sorakarayukichi, name: ユキチ, type: rss, platform: note, url: 'https://note.com/sorakarayukichi/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-nanke_housetech, name: 難家嘉之｜HOUSE TECH COLUMN by Yoshiyuki Nanke, type: rss, platform: note, url: 'https://note.com/nanke_housetech/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-kind_badger5313, name: EM | 銘柄分析と解説, type: rss, platform: note, url: 'https://note.com/kind_badger5313/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-bisyun_0401, name: ヒイラギ, type: rss, platform: note, url: 'https://note.com/bisyun_0401/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-dicetrader, name: ダイス, type: rss, platform: note, url: 'https://note.com/dicetrader/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-right_emu2967, name: まつとむ, type: rss, platform: note, url: 'https://note.com/right_emu2967/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-calf_investing, name: カルフィン, type: rss, platform: note, url: 'https://note.com/calf_investing/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-morris_mkad, name: Morris, type: rss, platform: note, url: 'https://note.com/morris_mkad/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-maronn_no_kabu, name: MARONN, type: rss, platform: note, url: 'https://note.com/maronn_no_kabu/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-kobetukabu_ma, name: ま_個別株投資家, type: rss, platform: note, url: 'https://note.com/kobetukabu_ma/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-easy_moraea2941, name: 隙間時間の株式分析, type: rss, platform: note, url: 'https://note.com/easy_moraea2941/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-dandy_chives8908, name: 窓際サラリーマン・資産3億円を目指す, type: rss, platform: note, url: 'https://note.com/dandy_chives8908/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-agile_donkey7026, name: '子育て・教育・資産形成｜パイロットの暮らしログ ', type: rss, platform: note, url: 'https://note.com/agile_donkey7026/rss', lang: ja, mode: jpstock, status: active}
+- {id: note-natty_violet9780, name: だんでぃ@サウナ×資産運用, type: rss, platform: note, url: 'https://note.com/natty_violet9780/rss', lang: ja, mode: jpstock, status: active}
