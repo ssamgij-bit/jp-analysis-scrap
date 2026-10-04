@@ -166,8 +166,8 @@ sources:
   exclude_title:
   - おしながき
   fail: 0
-  last_post: '2026-09-25'
-  checked: '2026-09-26'
+  last_post: '2026-10-03'
+  checked: '2026-10-04'
 - id: minipochi
   platform: hatena
   url: https://minipochi.hateblo.jp/feed
@@ -186,7 +186,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-26'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-isi555
   name: しんご｜日本高配当株マニア
   type: rss
@@ -196,8 +196,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-26'
-  checked: '2026-09-26'
+  last_post: '2026-10-03'
+  checked: '2026-10-04'
 - id: note-yoshida_dino
   platform: note
   url: https://note.com/yoshida_dino/rss
@@ -215,8 +215,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-26'
-  checked: '2026-09-26'
+  last_post: '2026-10-03'
+  checked: '2026-10-04'
 - id: note-deft_knot1002
   platform: note
   url: https://note.com/deft_knot1002/rss
@@ -234,8 +234,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-26'
-  checked: '2026-09-26'
+  last_post: '2026-10-03'
+  checked: '2026-10-04'
 - id: note-kou_koto
   platform: note
   url: https://note.com/kou_koto/rss
@@ -261,8 +261,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-25'
-  checked: '2026-09-26'
+  last_post: '2026-10-03'
+  checked: '2026-10-04'
 - id: note-makomen_life
   platform: note
   url: https://note.com/makomen_life/rss
@@ -308,8 +308,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-26'
-  checked: '2026-09-26'
+  last_post: '2026-10-03'
+  checked: '2026-10-04'
 - id: note-kokonoe_cluture
   name: ココノエ｜日本株を数字で読む
   type: rss
@@ -319,8 +319,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-24'
-  checked: '2026-09-26'
+  last_post: '2026-09-29'
+  checked: '2026-10-04'
 - id: note-tsubo_com_
   platform: note
   url: https://note.com/tsubo_com_/rss
@@ -335,7 +335,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-23'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-uninote8320
   platform: note
   url: https://note.com/uninote8320/rss
@@ -358,7 +358,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-02'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-yamashantoushi
   platform: note
   url: https://note.com/yamashantoushi/rss
@@ -377,7 +377,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-25'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-taisuke_invest
   platform: note
   url: https://note.com/taisuke_invest/rss
@@ -391,8 +391,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-25'
-  checked: '2026-09-26'
+  last_post: '2026-09-27'
+  checked: '2026-10-04'
 - id: note-xmgnzg
   platform: note
   url: https://note.com/xmgnzg/rss
@@ -414,8 +414,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-22'
-  checked: '2026-09-26'
+  last_post: '2026-10-03'
+  checked: '2026-10-04'
 - id: note-buffekk
   platform: note
   url: https://note.com/buffekk/rss
@@ -446,7 +446,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-11'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-suu2
   platform: note
   url: https://note.com/suu2/rss
@@ -469,7 +469,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-22'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-tatsuya_sabato
   platform: note
   url: https://note.com/tatsuya_sabato/rss
@@ -507,8 +507,8 @@ sources:
   mode: all
   status: active
   fail: 0
-  last_post: '2026-09-25'
-  checked: '2026-09-26'
+  last_post: '2026-10-01'
+  checked: '2026-10-04'
 - id: tg-aetherjapanresearch
   platform: telegram
   url: https://t.me/s/aetherjapanresearch
@@ -531,7 +531,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-16'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-light_tulip2744
   name: ベイファン＠個別株分析
   type: rss
@@ -542,7 +542,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-26'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-huge_quokka6653
   name: RYO＠AFP・FP2級・外務員1種
   type: rss
@@ -553,7 +553,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-22'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-ichiha_money
   name: いちは｜高配当株で月5万を目指す投資メモ
   type: rss
@@ -563,8 +563,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-26'
-  checked: '2026-09-26'
+  last_post: '2026-10-02'
+  checked: '2026-10-04'
 - id: note-super_zebra938
   name: ロン・ちび助
   type: rss
@@ -574,8 +574,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-24'
-  checked: '2026-09-26'
+  last_post: '2026-10-01'
+  checked: '2026-10-04'
 - id: note-sorakarayukichi
   name: ユキチ
   type: rss
@@ -585,8 +585,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-26'
-  checked: '2026-09-26'
+  last_post: '2026-09-29'
+  checked: '2026-10-04'
 - id: note-nanke_housetech
   name: 難家嘉之｜HOUSE TECH COLUMN by Yoshiyuki Nanke
   type: rss
@@ -597,7 +597,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-01'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-kind_badger5313
   name: EM | 銘柄分析と解説
   type: rss
@@ -608,7 +608,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-25'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-bisyun_0401
   name: ヒイラギ
   type: rss
@@ -619,7 +619,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-23'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-dicetrader
   name: ダイス
   type: rss
@@ -630,7 +630,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-06'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-right_emu2967
   name: まつとむ
   type: rss
@@ -640,8 +640,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-23'
-  checked: '2026-09-26'
+  last_post: '2026-09-30'
+  checked: '2026-10-04'
 - id: note-calf_investing
   name: カルフィン
   type: rss
@@ -652,7 +652,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-08-30'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-morris_mkad
   name: Morris
   type: rss
@@ -663,7 +663,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-10'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-maronn_no_kabu
   name: MARONN
   type: rss
@@ -674,7 +674,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-09-25'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-kobetukabu_ma
   name: ま_個別株投資家
   type: rss
@@ -684,8 +684,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-26'
-  checked: '2026-09-26'
+  last_post: '2026-10-03'
+  checked: '2026-10-04'
 - id: note-easy_moraea2941
   name: 隙間時間の株式分析
   type: rss
@@ -696,7 +696,7 @@ sources:
   status: active
   fail: 0
   last_post: '2026-08-29'
-  checked: '2026-09-26'
+  checked: '2026-10-04'
 - id: note-dandy_chives8908
   name: 窓際サラリーマン・資産3億円を目指す
   type: rss
@@ -706,8 +706,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-26'
-  checked: '2026-09-26'
+  last_post: '2026-10-04'
+  checked: '2026-10-04'
 - id: note-agile_donkey7026
   name: '子育て・教育・資産形成｜パイロットの暮らしログ '
   type: rss
@@ -717,8 +717,8 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-20'
-  checked: '2026-09-26'
+  last_post: '2026-09-29'
+  checked: '2026-10-04'
 - id: note-natty_violet9780
   name: だんでぃ@サウナ×資産運用
   type: rss
@@ -728,5 +728,115 @@ sources:
   mode: jpstock
   status: active
   fail: 0
-  last_post: '2026-09-26'
-  checked: '2026-09-26'
+  last_post: '2026-10-03'
+  checked: '2026-10-04'
+- id: note-com-uta-inc-8888
+  name: れあにゃん
+  type: rss
+  platform: note
+  url: https://note.com/uta_inc_8888/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-03'
+- id: note-com-dataneko
+  name: データで語る猫🐾| AI株分析
+  type: rss
+  platform: note
+  url: https://note.com/dataneko/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-03'
+- id: note-com-kabu-neko-nya
+  name: 話題株の論点にゃ
+  type: rss
+  platform: note
+  url: https://note.com/kabu_neko_nya/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-03'
+- id: note-com-tasty-yeti5399
+  name: tasty｜AIで決算を読む実験室
+  type: rss
+  platform: note
+  url: https://note.com/tasty_yeti5399/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-03'
+- id: note-com-kabuno-chokan
+  name: 株の夕刊｜ぱんだ塾長
+  type: rss
+  platform: note
+  url: https://note.com/kabuno_chokan/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-03'
+- id: note-com-amasasnote
+  name: 37歳からいろいろ勉強してみる-Amasasnote
+  type: rss
+  platform: note
+  url: https://note.com/amasasnote/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-03'
+- id: note-com-iyoda0303
+  name: いよ
+  type: rss
+  platform: note
+  url: https://note.com/iyoda0303/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-02'
+- id: note-com-fair-quince5802
+  name: ソンブラ
+  type: rss
+  platform: note
+  url: https://note.com/fair_quince5802/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-03'
+- id: note-com-weekendcolab
+  name: 週末企業研究 ファンダ分析 投資家
+  type: rss
+  platform: note
+  url: https://note.com/weekendcolab/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-01'
+- id: note-com-b-bull
+  name: ブルくん
+  type: rss
+  platform: note
+  url: https://note.com/b_bull_/rss
+  lang: ja
+  mode: jpstock
+  status: active
+  origin: auto
+  added: '2026-10-04'
+  last_post: '2026-10-03'
