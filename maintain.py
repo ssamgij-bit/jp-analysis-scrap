@@ -107,6 +107,8 @@ def main():
                 report["dormant"].append(f"{src['name']} (피드 오류)")
             continue
         src["fail"] = 0
+        if src["type"] == "page" and not ev["last_post"]:  # 월초 빈 페이지: 이전 값 유지
+            ev["last_post"] = src.get("last_post") or today()
         src["last_post"] = ev["last_post"]
         src["checked"] = today()
         stale = days_since(ev["last_post"]) > ACTIVE_DAYS

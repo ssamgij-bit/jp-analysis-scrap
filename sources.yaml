@@ -840,3 +840,23 @@ sources:
   origin: auto
   added: '2026-10-04'
   last_post: '2026-10-03'
+# ---- 사용자 지정 투자 블로그 (2026-10-04 추가, mode: curated = 가상화폐·FX·광고·짧은 글만 제외하고 전부 게시) ----
+- {id: ameblo-kouzi200804, name: 配当優待生活, type: rss, platform: ameblo, url: 'https://rssblog.ameba.jp/kouzi200804/rss20.xml', lang: ja, mode: curated, fetch_body: true, status: active, origin: user}
+- {id: staba-yunagi, name: 夕凪通信(ダントツ投資), type: page, platform: web, url: 'https://kabu.staba.jp/Day/current.htm', encoding: cp932, lang: ja, mode: curated, status: active, origin: user}
+- {id: ameblo-v-com2, name: 21世紀投資, type: rss, platform: ameblo, url: 'https://rssblog.ameba.jp/v-com2/rss20.xml', lang: ja, mode: curated, fetch_body: true, status: active, origin: user}
+- {id: rakuten-tachanfund, name: たーちゃんファンド, type: rss, platform: rakuten, url: 'https://api.plaza.rakuten.ne.jp/tachanfund/rss/', lang: ja, mode: curated, fetch_body: true, status: active, origin: user}
+- {id: rakuten-kabu1000, name: かぶ１０００投資日記, type: rss, platform: rakuten, url: 'https://api.plaza.rakuten.ne.jp/kabu1000/rss/', lang: ja, mode: curated, fetch_body: true, status: active, origin: user}
+- {id: seesaa-7oku, name: 7億円ブログ(7oku.seesaa.net), type: rss, platform: blog, url: 'https://7oku.seesaa.net/index20.rdf', lang: ja, mode: curated, fetch_body: true, status: active, origin: user}
+- {id: 6suke, name: ろくすけの長期投資の旅, type: rss, platform: blog, url: 'https://6suke.com/feed/', lang: ja, mode: curated, status: active, origin: user}
+- {id: ameblo-okuyama-tukito, name: エナフンさんの梨の木, type: rss, platform: ameblo, url: 'https://rssblog.ameba.jp/okuyama-tukito/rss20.xml', lang: ja, mode: curated, fetch_body: true, status: active, origin: user}
+# ---- 비슷한 성격으로 추가한 일본 개별주 블로그 (2026-10-04) ----
+- {id: rakuten-mikimaru71, name: みきまるの優待バリュー株日誌, type: rss, platform: rakuten, url: 'https://api.plaza.rakuten.ne.jp/mikimaru71/rss/', lang: ja, mode: curated, fetch_body: true, status: active, origin: claude}
+- {id: kabu2oku, name: 弐億貯男(サラリーマンが株式投資でセミリタイアを目指してみました), type: rss, platform: blog, url: 'https://kabu2oku.doorblog.jp/index.rdf', lang: ja, mode: curated, fetch_body: true, status: active, origin: claude, exclude_title: [含み損益, 前日比, 運用成績, 投資成績, 反発, 反落, 下落, 大幅高, 大幅安, 保有株は]}
+- {id: ministeady, name: 株式投資検証ブログ, type: rss, platform: blog, url: 'https://ministeady.com/feed/', lang: ja, mode: all, status: active, origin: claude}
+- {id: sowofsakura, name: 日本株 長期保有ノススメ, type: rss, platform: blog, url: 'https://sowofsakura.blogspot.com/feeds/posts/default', lang: ja, mode: curated, fetch_body: true, status: active, origin: claude, exclude_title: [注目記事]}
+- {id: a1000miles, name: つなわたりのまいにち(専業投資家日記), type: rss, platform: blog, url: 'http://a1000miles.blog.fc2.com/?xml', lang: ja, mode: curated, fetch_body: true, status: active, origin: claude}
+- {id: kibinago7777, name: 株主優待と高配当株を買い続ける株式投資ブログ, type: rss, platform: blog, url: 'https://kibinago7777.blogspot.com/feeds/posts/default', lang: ja, mode: jpstock, status: active, origin: claude, exclude_title: [アカウント, オススメ銘柄まとめ, 投資成績]}
+- {id: gamerinvestlog, name: ゲーマー投資家のログイン日記, type: rss, platform: blog, url: 'https://gamerinvestlog.com/feed/', lang: ja, mode: jpstock, status: active, origin: claude}
+- {id: komamekabu, name: Dr.小豆の高配当株投資, type: rss, platform: blog, url: 'https://komamekabu.com/?feed=rss2', lang: ja, mode: jpstock, status: active, origin: claude}
+- {id: cocolog-jota800, name: 元サラリーマン投資家の日々の雑感, type: rss, platform: blog, url: 'http://swimmingpool.cocolog-nifty.com/jota800/atom.xml', lang: ja, mode: curated, need_ticker: true, fetch_body: true, status: active, origin: claude}
+- {id: kafka-stock, name: カフカの成長株投資ブログ, type: rss, platform: blog, url: 'https://www.kafka-stock.com/feed', lang: ja, mode: jpstock, status: active, origin: claude}

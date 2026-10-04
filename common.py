@@ -376,3 +376,64 @@ def tg_send(text, preview=True):
 
 def esc(s):
     return html.escape(s or "", quote=False)
+
+
+# ---------------- 글 페이지 본문(발췌만 주는 피드용) ----------------
+_BODY_SEL = [
+    '[data-uranus-component="entryBody"]', "#entryBody", ".skin-entryBody",  # ameblo
+    ".dText", ".diary_text",                                                 # 楽天ブログ
+    ".article-body-inner", ".article-body", ".entry-content", ".entry-body", ".entry_body",
+    ".post-body", ".post-content", ".entry-text", ".entry_text", ".mainEntryBody", ".blog-text",
+    ".text", ".blogbody",                                                    # Seesaa·FC2
+    "article", "main",
+]
+BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+
+
+def fetch_body(url, timeout=25):
+    """글 페이지에서 본문 텍스트 추출. 실패 시 빈 문자열"""
+    try:
+        from bs4 import BeautifulSoup
+        r = S.get(url, timeout=timeout, headers={"User-Agent": BROWSER_UA})
+        if r.status_code != 200:
+            return ""
+        enc = r.encoding if r.encoding and r.encoding.lower() not in ("iso-8859-1",) else r.apparent_encoding
+        soup = BeautifulSoup(r.content.decode(enc or "utf-8", "ignore"), "html.parser")
+        for t in soup(["script", "style", "noscript", "iframe", "form", "nav", "aside", "footer"]):
+            t.decompose()
+        best = ""
+        for sel in _BODY_SEL:
+            for el in soup.select(sel):
+                txt = re.sub(r"\n\s*\n+", "\n", el.get_text("\n", strip=True))
+                if len(txt) > len(best):
+                    best = txt
+            if len(best) >= 300:
+                break
+        return best[:30000]
+    except Exception as e:  # noqa
+        print("  body error", url, str(e)[:80])
+        return ""
+
+
+def fetch_dated_page(url, encoding="cp932"):
+    """날짜 줄(2026/10/1(木))로 글을 나누는 일기형 페이지(예: 夕凪通信 kabu.staba.jp).
+    반환: [(id, time, title, text, link)] — 제목은 날짜 바로 윗줄"""
+    from bs4 import BeautifulSoup
+    r = S.get(url, timeout=25, headers={"User-Agent": BROWSER_UA})
+    if r.status_code != 200:
+        return []
+    h = r.content.decode(encoding, "ignore")
+    lines = BeautifulSoup(h, "html.parser").get_text("\n", strip=True).split("\n")
+    if "バックナンバー" in lines:
+        lines = lines[:lines.index("バックナンバー")]
+    pat = re.compile(r"^(\d{4})/(\d{1,2})/(\d{1,2})\([月火水木金土日]\)")
+    idx = [i for i, l in enumerate(lines) if pat.match(l)]
+    out = []
+    for n, i in enumerate(idx):
+        y, m, d = map(int, pat.match(lines[i]).groups())
+        title = lines[i - 1] if i > 0 else lines[i]
+        end = (idx[n + 1] - 1) if n + 1 < len(idx) else len(lines)
+        text = "\n".join(lines[i + 1:end])
+        ts = datetime(y, m, d, 9, 0, tzinfo=KST).astimezone(timezone.utc)
+        out.append((f"{url}#{y}{m:02d}{d:02d}-{title[:20]}", ts, title, text, url))
+    return out

@@ -9,7 +9,7 @@ from datetime import datetime, timezone, timedelta
 from note_quality import ai_written
 from summarize import summarize
 from common import (load_yaml, load_json, save_json, fetch_feed, entry_time, entry_text, substack_locked,
-                    note_key, note_detail, fetch_tg_channel, find_tickers, ticker_label, fin_score, has_japan,
+                    note_key, note_detail, fetch_tg_channel, fetch_body, fetch_dated_page, find_tickers, ticker_label, fin_score, has_japan,
                     banned, detect_lang, translate, lead_sentences, tg_send, esc, KST)
 
 MAX_AGE = timedelta(days=3)          # 이보다 오래된 글은 게시하지 않음
@@ -17,7 +17,8 @@ FIRST_RUN_WINDOW = timedelta(hours=int(os.environ.get("FIRST_RUN_HOURS", "24")))
 MAX_POSTS_PER_RUN = int(os.environ.get("MAX_POSTS", "25"))
 MAX_PER_SOURCE_PER_DAY = 0   # 소스당 하루 게시 한도(0 = 제한 없음, 사용자 요청 2026-09-25)
 PLATFORM = {"substack": "Substack", "note": "note", "hatena": "はてな", "naver": "네이버", "blog": "Blog",
-            "telegram": "Telegram", "note_tag": "note"}
+            "telegram": "Telegram", "note_tag": "note", "ameblo": "アメブロ", "rakuten": "楽天ブログ",
+            "web": "Web"}
 FLAG = {"en": "🇺🇸", "ja": "🇯🇵", "ko": "🇰🇷"}
 
 
@@ -30,12 +31,18 @@ def get_items(src):
             first = txt.split("\n")[0][:120]
             items.append({"id": link, "title": first, "text": txt, "link": link, "time": ts})
         return items
+    if t == "page":  # 일기형 웹페이지(날짜 줄로 글 구분)
+        for pid, ts, title, txt, link in fetch_dated_page(src["url"], src.get("encoding", "cp932")):
+            items.append({"id": pid, "title": title, "text": txt, "link": link, "time": ts})
+        return items
     f, err = fetch_feed(src["url"])
     if not f:
         print(f"  ! {src['id']}: {err}")
         return items
     for e in f.entries[:30]:
         link = e.get("link") or e.get("id")
+        if src.get("platform") == "ameblo" and "ameblo.jp/" not in (link or ""):
+            continue  # アメブロ RSS의 광고 항목
         items.append({
             "id": link,
             "title": (e.get("title") or "").strip(),
@@ -61,6 +68,18 @@ def enrich_note(it):
     return it
 
 
+def enrich_body(it):
+    """발췌만 주는 피드(アメブロ·楽天 등): 글 페이지에서 본문을 가져와 판정·요약에 사용"""
+    if len(it["text"]) < 2500 and it.get("link"):
+        b = fetch_body(it["link"])
+        if len(b) > len(it["text"]):
+            it["text"] = b
+    return it
+
+
+# 사용자가 고른 투자 블로그(curated): 가상화폐·FX·광고·너무 짧은 글만 거름
+CURATED_EXCLUDE = re.compile(r"ビットコイン|イーサリアム|仮想通貨|暗号資産|FX|ドル円|アドセンス|^\s*\[PR\]|【PR】|プレゼント企画", re.I)
+
 GLOBAL_EXCLUDE = re.compile(
     r"相場振り返り|日本株動向|大引け|前場|後場|市況|朝刊|夕刊|今日動いた|本日の|週間振り返り|週報|運用報告|運用成績|資産推移|"
     r"ポートフォリオ公開|収益公開|アドセンス|優待到着|ビットコイン|イーサリアム|仮想通貨|暗号資産|ドル円|Market Wrap|Daily Wrap|Week in Review|Weekly Recap|시황|마감", re.I)
@@ -74,6 +93,14 @@ def judge(src, it):
     for pat in src.get("exclude_title", []) or []:
         if re.search(pat, title, re.I):
             return False, []
+    mode = src.get("mode", "all")
+    if mode == "curated":
+        tick = find_tickers(blob, title=title)
+        if CURATED_EXCLUDE.search(title) or len(text) < 300:
+            return False, tick
+        if src.get("need_ticker") and not tick:
+            return False, tick
+        return True, tick
     if GLOBAL_EXCLUDE.search(title):
         return False, []
     tick = find_tickers(blob, title=title)
@@ -82,7 +109,6 @@ def judge(src, it):
     if FOREIGN_TICKER.search(title) and not title_tick:
         return False, []
     fs = fin_score(blob)
-    mode = src.get("mode", "all")
     full_text = src.get("platform") not in ("naver",)  # 네이버 RSS는 발췌만 제공
     n = it.get("len") or len(text)
 
@@ -204,6 +230,9 @@ def main():
                 continue
             if src.get("platform") in ("note", "note_tag"):
                 it = enrich_note(it)
+                time.sleep(0.5)
+            elif src.get("fetch_body"):
+                it = enrich_body(it)
                 time.sleep(0.5)
             ok, tick = judge(src, it)
             if not ok:

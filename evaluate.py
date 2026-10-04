@@ -2,7 +2,7 @@
 from datetime import datetime, timezone, timedelta
 
 from common import (fetch_feed, entry_time, entry_text, find_tickers, fin_score, has_japan,
-                    fetch_tg_channel)
+                    fetch_tg_channel, fetch_dated_page)
 
 ACTIVE_DAYS = 60
 
@@ -64,9 +64,25 @@ def evaluate_tg(handle, days=ACTIVE_DAYS):
     }
 
 
+def evaluate_page(url, days=ACTIVE_DAYS):
+    try:
+        posts = fetch_dated_page(url)
+    except Exception as e:  # noqa
+        return {"ok": False, "error": str(e)[:80]}
+    if not posts:  # 월초에 아직 글이 없을 수 있음 → 오류로 보지 않음
+        return {"ok": True, "last_post": None, "n_recent": 0, "stock_ratio": 0, "jpstock_ratio": 0, "avg_len": 0, "title": url}
+    now = datetime.now(timezone.utc)
+    last = max(p[1] for p in posts)
+    return {"ok": True, "last_post": last.date().isoformat(), "title": url,
+            "n_recent": sum(1 for p in posts if p[1] >= now - timedelta(days=days)),
+            "stock_ratio": 0, "jpstock_ratio": 0, "avg_len": int(sum(len(p[3]) for p in posts) / len(posts))}
+
+
 def evaluate(src):
     if src["type"] == "telegram":
         return evaluate_tg(src["handle"])
+    if src["type"] == "page":
+        return evaluate_page(src["url"])
     return evaluate_rss(src["url"])
 
 
