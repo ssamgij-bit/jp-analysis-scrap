@@ -169,9 +169,14 @@ def banned(text):
 
 
 # ---------------- 피드 ----------------
+ALT_UA = "Feedly/1.0 (+http://www.feedly.com/fetcher.html; like FeedFetcher-Google)"  # Seesaa·ココログ 등은 일반 봇 UA를 403 처리
+
+
 def fetch_feed(url, timeout=25):
     try:
         r = S.get(url, timeout=timeout)
+        if r.status_code == 403:
+            r = S.get(url, timeout=timeout, headers={"User-Agent": ALT_UA})
         if r.status_code != 200:
             return None, f"HTTP {r.status_code}"
         f = feedparser.parse(r.content)
@@ -395,6 +400,8 @@ def fetch_body(url, timeout=25):
     try:
         from bs4 import BeautifulSoup
         r = S.get(url, timeout=timeout, headers={"User-Agent": BROWSER_UA})
+        if r.status_code == 403:
+            r = S.get(url, timeout=timeout, headers={"User-Agent": ALT_UA})
         if r.status_code != 200:
             return ""
         enc = r.encoding if r.encoding and r.encoding.lower() not in ("iso-8859-1",) else r.apparent_encoding

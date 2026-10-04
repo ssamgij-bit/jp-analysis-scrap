@@ -859,4 +859,4 @@ sources:
 - {id: gamerinvestlog, name: ゲーマー投資家のログイン日記, type: rss, platform: blog, url: 'https://gamerinvestlog.com/feed/', lang: ja, mode: jpstock, status: active, origin: claude}
 - {id: komamekabu, name: Dr.小豆の高配当株投資, type: rss, platform: blog, url: 'https://komamekabu.com/?feed=rss2', lang: ja, mode: jpstock, status: active, origin: claude}
 - {id: cocolog-jota800, name: 元サラリーマン投資家の日々の雑感, type: rss, platform: blog, url: 'http://swimmingpool.cocolog-nifty.com/jota800/atom.xml', lang: ja, mode: curated, need_ticker: true, fetch_body: true, status: active, origin: claude}
-- {id: kafka-stock, name: カフカの成長株投資ブログ, type: rss, platform: blog, url: 'https://www.kafka-stock.com/feed', lang: ja, mode: jpstock, status: active, origin: claude}
+- {id: kafka-stock, name: カフカの成長株投資ブログ, type: rss, platform: blog, url: 'https://www.kafka-stock.com/feed', lang: ja, mode: jpstock, status: blocked, origin: claude, note: 'GitHub에서 접속 불가(2026-10-04)'}
