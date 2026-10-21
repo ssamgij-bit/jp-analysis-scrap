@@ -505,7 +505,7 @@ sources:
   url: https://rss.blog.naver.com/neighbor_biz.xml
   lang: ko
   mode: all
-  status: active
+  status: blocked
   fail: 0
   last_post: '2026-10-17'
   checked: '2026-10-17'
